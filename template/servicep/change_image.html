@@ -1,0 +1,29 @@
+{% extends 'servicep/service_layout.html' %}
+{% load static %}
+{% block content %}
+<div class="row mb-4">
+	<div class="col-lg-4 col-md-2 mb-md-0 mb-4">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h3>Change Image</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'editimage' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                    	<label for="image">Choose an image:</label>
+                    	<input type="file" id="image" name="image" accept="image/*" class="form-control"> 
+                    </div>
+
+                    <input type="hidden" id="name" name="proj_id" class="form-control" value="{{ project.proj_id }}">
+
+                    <div class="form-group d-flex justify-content-end">
+                        <input type="submit" value="Save" class="btn btn-success mr-2">
+                        <input type="reset" value="Cancel" class="btn btn-danger">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

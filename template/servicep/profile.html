@@ -1,0 +1,57 @@
+{% extends 'servicep/service_layout.html' %}
+{% load static %}
+{% block content %}
+<div class="row"></div>
+<div class="row mb-4">
+    <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h3>My Profile</h3>
+                <div class="row">
+                    <div class="col-lg-6 col-7"></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'myprofile' %}" method="post">
+                    {% csrf_token %}
+                    
+                     <input type="hidden" name="reg_id" value="{{ profile.reg_id }}">
+
+                    <table class="table">
+                        <tr>
+                            <th><label for="name">Name:</label></th>
+                            <td><input type="text" id="name" name="name" class="form-control">{{profile.reg_name}}</td>
+                        </tr>
+                        <tr>
+                            <th><label for="address">Address:</label></th>
+                            <td><input type="text" id="address" name="address" class="form-control">{{profile.address}}</td>
+                        </tr>
+                        <tr>
+                            <th><label for="state">State:</label></th>
+                            <td><input type="text" id="state" name="state" class="form-control">{{profile.state}}</td>
+                        </tr>
+                        <tr>
+                            <th><label for="district">District:</label></th>
+                            <td><input type="text" id="district" name="district" class="form-control">{{profile.district}}</td>
+                        </tr>
+                        <tr>
+                            <th><label for="city">City:</label></th>
+                            <td><input type="text" id="city" name="city" class="form-control">{{profile.city}}</td>
+                        </tr>
+                        <tr>
+                            <th><label for="pnumber">Phone number:</label></th>
+                            <td><input type="text" id="pnumber" name="pnumber" class="form-control">{{profile.phone_number}}</td>
+                        </tr>
+                        <tr>
+                            <th><label for="email">Email Id:</label></th>
+                            <td><input type="text" id="email" name="email" class="form-control">{{profile.email_id}}</td>
+                        </tr>
+                    </table>
+                    
+                    <a href="{% url 'editprofile' profile.reg_id %}" class="btn btn-primary mt-2">Edit</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

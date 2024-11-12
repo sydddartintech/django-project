@@ -1,0 +1,86 @@
+{% extends 'servicep/service_layout.html' %}
+{% load static %}
+{% block content %}
+<div class="row mb-4">
+  <div class="col-lg-4 col-md-2 mb-md-0 mb-4">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Add Image</h3>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'gallery_view' portfolio.portfolio_id %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Add Image </label>
+          </div>
+
+
+                    <div class="form-group">
+                    	<label for="image">Choose an image:</label>
+                    	<input type="file" id="image" name="image" accept="image/*" class="form-control"> 
+                    </div>
+
+
+               <input type="hidden" id="name" name="portfolio_id" class="form-control" value="{{ portfolio.portfolio_id }}">
+
+          <div class="form-group d-flex justify-content-end">
+            <input type="submit" value="Save" class="btn btn-success mr-2">
+            <input type="reset" value="Cancel" class="btn btn-danger">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8 col-md-10 mb-md-0 mb-4">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Images</h3>
+      </div>
+      <div class="card-body">
+        <div class="container mt-4">
+          <table class="table table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th>Image</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              {% for gallery in gallery %}
+              <tr>
+                <td><img src="{% get_media_prefix %}/{{gallery.image_name}}" width="70" height="70"> 
+                {% if gallery.status == 'inactive' or gallery.status == 'rejected' %}
+                <br>
+
+                    <a href="{% url 'change_port_image' gallery.gallery_id %}" >Change Image</a>
+
+                  {% endif %}
+                </td>
+                <td>{{ gallery.status }}</td>
+                <td>
+                  <a href="{% url 'deleteg' gallery.gallery_id %}" class="btn btn-danger btn-sm">Delete</a>
+
+                  {% if gallery.status == 'inactive' %}
+
+                  <a href="{% url 'change_port_image' gallery.gallery_id %}" class="btn btn-primary btn-sm">Change Image</a>
+
+                  {% elif gallery.status == 'rejected' %}
+
+                  <a href="{% url 'viewreason' gallery.gallery_id %} " class="btn btn-primary btn-sm">View Reason</a>
+
+                   <!-- <a href="{% url 'change_port_image' gallery.gallery_id %}" class="btn btn-primary btn-sm">Change Image</a> -->
+
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

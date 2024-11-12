@@ -1,0 +1,84 @@
+{% extends 'servicep/service_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row mb-4">
+  <div class="col-lg-8 col-md-10 mb-md-0 mb-4">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Projects</h3>
+      </div>
+      <div class="card-body">
+        <div class="container mt-4">
+          <div style="overflow-x: auto;">
+            <table class="table table-bordered">
+              <thead class="thead-light">
+                <tr>
+                  <th>SLNo</th>
+                  <th>Category Name</th>
+                  <th>Project Title</th>
+                  <th>Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in slist %}
+                <tr>
+                  <td>{{ s.proj_id }}</td>
+                  <td>{{ s.cat_name }}</td>
+                  <td>{{ s.proj_title }}</td>
+                  <td><img src="{% get_media_prefix %}/{{ s.image_name }}" width="70" height="70">
+                    <a href="{% url 'change_image' s.proj_id %}" class="btn btn-primary btn-sm"> Change Image</a> </td>
+                  <td>
+                    <a href="{% url 'editproject' s.proj_id %}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{% url 'delete_project' s.proj_id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'portfolio'  s.proj_id %}" class="btn btn-primary btn-sm">Portfolio</a>
+                    <!-- <input type="hidden" name="fk_reg_id" value="{{ s.fk_reg_id}}"> -->
+                  </td>
+                </tr> 
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4 col-md-2 mb-md-0 mb-4">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Add Projects</h3>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'saveproject' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="category">Choose category:</label>
+            <select name="category" class="form-control">
+              {% for category in categories %}
+              <option value="{{ category.cat_id }}">{{ category.cat_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Project Title</label>
+            <input type="text" name="title" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="image">Choose an image:</label>
+            <input type="file" name="image" accept="image/*" class="form-control" >
+          </div>
+
+          <div class="form-group d-flex justify-content-end">
+            <input type="submit" value="Save" class="btn btn-success mr-2">
+            <input type="reset" value="Cancel" class="btn btn-danger">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

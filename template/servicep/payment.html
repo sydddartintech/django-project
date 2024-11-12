@@ -1,0 +1,74 @@
+{% extends 'servicep/service_layout.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript" src="{% static 'jquery-3.7.1.min.js' %}"></script>
+<div class="row mb-4">
+    <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h3>Payment</h3>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'pay' %}" method="post" id="paymentForm">
+                    {% csrf_token %}
+                    <table class="table">
+                        <tr>
+                            <th><label for="Package">Package:</label></th>
+                            <td>
+                                <select id="Package" name="Package" class="form-control">
+                                    <option value="disabled">Select</option>
+                                    <option value="Silver">Silver</option>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Platinum">Platinum</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="rate">Rate:</label></th>
+                            <td><input type="number" id="rate" name="rate" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="name">Name:</label></th>
+                            <td><input type="text" id="name" name="name" class="form-control" placeholder="Enter Your Name "></td>
+                        </tr>
+                        <tr>
+                            <th><label for="card_no">Card Number:</label></th>
+                            <td><input type="number" id="card_no" name="card_no" class="form-control" placeholder="Enter Your Card No "></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" value="SAVE" class="btn btn-primary mt-2">
+                                <input type="reset" value="Cancel" class="btn btn-secondary mt-2">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#Package').change(function() {
+            var selectedPackage = $(this).val();
+            var rate = 0;
+            switch(selectedPackage) {
+                case 'Silver':
+                    rate = 700;
+                    break;
+                case 'Gold':
+                    rate = 1000;
+                    break;
+                case 'Platinum':
+                    rate = 2000;
+                    break;
+                default:
+                    rate = 0; 
+            }
+            $('#rate').val(rate);
+        });
+    });
+</script>
+
+{% endblock %}

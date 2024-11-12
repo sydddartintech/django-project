@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit</title>
+</head>
+<body>
+	<form action="{% url 'update_data' %}" method="post">
+		{% csrf_token %}
+		<label>Student Name: </label>
+		<input type="text" name="sname" value="{{sdata.st_name}}">
+		<label>Email</label>
+		<input type="Email" name="email" value="{{sdata.st_email}}">
+		<label>Phone Number:</label>
+		<input type="text" name="phone" value="{{sdata.st_phone_num}}">
+		<input type="hidden" name="sid" value="{{sdata.stud_id}}">
+		<input type="submit" value="Save">
+	</form>
+		
+
+</body>
+</html>

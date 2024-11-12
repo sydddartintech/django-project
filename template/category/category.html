@@ -1,0 +1,59 @@
+{% extends 'admin/admin_layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row mb-4">
+  <div class="col-lg-4 col-md-2 mb-md-0 mb-4">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Add Category</h3>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'savedata' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Category Name: </label>
+            <input type="text" name="catname" class="form-control">
+          </div>
+          <div class="form-group d-flex justify-content-end">
+            <input type="submit" value="Save" class="btn btn-success mr-2">
+            <input type="reset" value="Cancel" class="btn btn-danger">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8 col-md-10 mb-md-0 mb-4">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>List Category</h3>
+      </div>
+      <div class="card-body">
+        <div class="container mt-4">
+          <table class="table table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th>Category Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in slist %}
+              <tr>
+                <td>{{ s.cat_name }}</td>
+                <td>
+                  <a href="{% url 'edit_category' s.cat_id %}" class="btn btn-primary btn-sm">Edit</a>
+                  <a href="{% url 'delete_data' s.cat_id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
